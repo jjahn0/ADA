@@ -18,13 +18,28 @@ def scraper():
     
     return redirect("http://localhost:5000/", code=302)
 
-# @app.route("/api/bell/<selection>")
-# def bells():
-#     if selection != None:
-#         sel = selection
-#         return sel
-#     else:
-#         return False
+@app.route("/bell")
+def bells():
+    bellData = []
+    entry = {}
+    y = []
+    companies = mongo.db.glass.distinct('company')
+    for company in companies:
+        qResult = mongo.db.glass.find_one({"company":company})
+        y.append(qResult['salaryMIN'])
+        y.append(qResult['salaryMED'])
+        y.append(qResult['salaryMAX'])
+        name = qResult['company']
+        entry = {
+            "y": y,
+            "type":"box",
+            "name":name
+        }
+        y=[]
+        bellData.append(entry)
+        
+    return jsonify(bellData)
+
 
 # @app.route("/api/bubble/<item>")
 # def bubbles():
@@ -33,6 +48,7 @@ def scraper():
 #         return it
 #     else:
 #         return False
+
 @app.route('/map')
 def map():
     glass = mongo.db.glass.find()
