@@ -41,13 +41,33 @@ def bells():
     return jsonify(bellData)
 
 
-# @app.route("/api/bubble/<item>")
-# def bubbles():
-#     if item != None:
-#         it = item
-#         return it
-#     else:
-#         return False
+@app.route("/bubble")
+def bubbles():
+    glass = mongo.db.glass.find()
+    data = []
+    entry = {}
+    for job in glass:
+        median = job['salaryMED']
+        rating = job['rating']
+        entry = {
+            'x': median,
+            'y': rating,
+            'mode': 'markers',
+            'type': 'scatter',
+            'name': job['company'],
+            'markers':{
+                'color': 'rgba(255,0,0)',
+                'size': rating*8,
+                'line': {
+                    'color': 'rgba(0,0,0)',
+                    'width' : 1
+                }
+            }
+        }
+        data.append(entry)
+    
+    return jsonify(data)
+
 
 @app.route('/map')
 def map():
