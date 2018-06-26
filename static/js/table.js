@@ -8,7 +8,7 @@
 
 // renderTable();
 
-var dataTable = $.get('/tabele');
+var dataTable = $.get('/table');
 
 dataTable.done( function(results){
     const keys = Object.keys(results[0]);
