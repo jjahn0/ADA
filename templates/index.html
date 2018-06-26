@@ -8,11 +8,11 @@
   <title>Analysis of Data Analyst Jobs</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://bootswatch.com/3/cerulean/bootstrap.min.css">
-  <link rel=“stylesheet” href=“https://unpkg.com/leaflet@1.0.2/dist/leaflet.css” />
-  <script src=“https://unpkg.com/leaflet@1.0.2/dist/leaflet.js”></script>
-  <script type=“text/javascript” src=“https://unpkg.com/leaflet.markercluster@1.0.3/dist/leaflet.markercluster.js“></script>
-  <link rel=“stylesheet” type=“text/css” href=“https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.css”>
-  <link rel=“stylesheet” type=“text/css” href=“https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.Default.css”>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+  <!-- <script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.0.3/dist/leaflet.markercluster.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.Default.css"> -->
 </head>
 
 <body>
@@ -51,7 +51,7 @@
             </div>
             <div class="col-md-6" style="padding:20px">
                 <h3>Bubbles</h3>
-                <div id="table"></div>
+                <div id="bubble"></div>
             </div>
         </div>
     </div>
@@ -61,5 +61,6 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="{{ url_for('static', filename='js/map.js') }}"></script>
 <script src="{{ url_for('static', filename='js/table.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bubble.js') }}"></script>
 </body>
 </html>
