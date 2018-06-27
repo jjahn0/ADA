@@ -84,8 +84,23 @@ def map():
         }
         data.append(entry)
         entry={}
+    print("Data created")
 
-    return jsonify(data)
+    geojson = {
+    "type": "FeatureCollection",
+    "features": [
+    {
+        "type": "Feature",
+        "geometry" : {
+            "type": "Point",
+            "coordinates": [d["location"][1], d["location"][0]],
+            },
+        "properties" : d,
+     } for d in data]
+    }
+
+    print("Returning GeoJson style data")
+    return jsonify(geojson)
 
 @app.route('/table')
 def table():
