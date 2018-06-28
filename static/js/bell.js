@@ -1,21 +1,38 @@
-var data = $.get('/bell');
+var bellData = $.get('/bell');
 
-data.done(function(results){
-    console.log(results);
-
-});
-
-var trace = [];
-
-for ( var i = 0; i < results.length; i ++ ) {
-    var result = results[i]
-    };
+bellData.done( function (data){
     
-trace.push(result);
+    var boxNumber = length.data;
+    var boxColor = [];
+    var allColors = numeric.linspace(0, 360, boxNumber);
+    // var data = [];
+    // var yValues = [];
 
+    //Colors
 
-var layout = {
-     title: 'Sample Salary-Range Box Plot'
-  };
-  
-Plotly.newPlot('plot', trace, layout);  
+    for( var i = 0; i < boxNumber;  i++ ){
+    var result = 'hsl('+ allColors[i] +',50%'+',50%)';
+    boxColor.push(result);
+    }
+
+    function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+    };
+    var layout = {
+    xaxis: {
+        showgrid: false,
+        zeroline: false,
+        tickangle: 60,
+        showticklabels: false
+    },
+    yaxis: {
+        zeroline: false,
+        gridcolor: 'white'
+    },
+    paper_bgcolor: 'rgb(233,233,233)',
+    plot_bgcolor: 'rgb(233,233,233)',
+    showlegend:false,
+    };
+
+    Plotly.newPlot('bell', data, layout);
+});
