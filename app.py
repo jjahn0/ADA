@@ -35,29 +35,32 @@ def bells():
             "type":"box",
             "name":name
         }
+        if entry["y"][0] != "":
+            bellData.append(entry)
         y=[]
-        bellData.append(entry)
-        
     return jsonify(bellData)
 
 
 @app.route("/bubble")
 def bubbles():
-    glass = mongo.db.glass.find()
+    companies = mongo.db.glass.distinct('company')
     data = []
     entry = {}
-    for job in glass:
+    for company in companies:
+        job = mongo.db.glass.find_one({"company":company})
         median = job['salaryMED']
         rating = job['rating']
+        rgba = 'rgba(%d,0,0)' % 255
         entry = {
-            'x': median,
-            'y': rating,
+            'x': [median],
+            'y': [rating],
             'mode': 'markers',
             'type': 'scatter',
-            'name': job['company'],
+            'text': [job['company']],
             'markers':{
-                'color': 'rgba(255,0,0)',
-                'size': rating*8,
+                'color': [rgba],
+                'size': [20],
+                'symbol': ['circle'],
                 'line': {
                     'color': 'rgba(0,0,0)',
                     'width' : 1
@@ -65,7 +68,8 @@ def bubbles():
             }
         }
         data.append(entry)
-    
+        entry={}
+        
     return jsonify(data)
 
 
@@ -84,23 +88,8 @@ def map():
         }
         data.append(entry)
         entry={}
-    print("Data created")
 
-    geojson = {
-    "type": "FeatureCollection",
-    "features": [
-    {
-        "type": "Feature",
-        "geometry" : {
-            "type": "Point",
-            "coordinates": [d["location"][1], d["location"][0]],
-            },
-        "properties" : d,
-     } for d in data]
-    }
-
-    print("Returning GeoJson style data")
-    return jsonify(geojson)
+    return jsonify(data)
 
 @app.route('/table')
 def table():
