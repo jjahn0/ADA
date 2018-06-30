@@ -4,12 +4,33 @@
 //JQuery to get data from endpoint
 var jobsData = $.get('/map');
 
+//JQuery to push data (state,city)
+//var call = $.get('/api/query/<key>&<value>');
+//error handling?
+
 //Jquery call, only proceed once we get data back from call
 jobsData.done(function (result) {
     //console.log( "Query done" );
     //console.log(result)
     createFeatures(result.features);
 });
+
+// function findStateCity(lat, lng) {
+//     var latlng = new google.maps.LatLng(lat, lng);
+//     //This is making the Geocode request
+//     var geocoder = new google.maps.Geocoder();
+//     geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+//         if (status !== google.maps.GeocoderStatus.OK) {
+//             alert(status);
+//         }
+//         //This is checking to see if the Geoeode Status is OK before proceeding
+//         if (status == google.maps.GeocoderStatus.OK) {
+//             console.log(results[0].address_components[2].long_name);
+//             console.log(results[0].address_components[4].short_name);
+//             var address = (results[0].formatted_address[0]);
+//         }
+//     });
+// }
 
 function createFeatures(jobsData) {
 
@@ -48,6 +69,16 @@ function createFeatures(jobsData) {
         var obj = a.layer
         //console.dir(obj)
         console.log(obj.getLatLng());
+        var coor = obj.getLatLng()
+        console.log(coor.lat);
+        //findStateCity does reserve geocoding, but I think it's better to pass coordinates to app.py and filter there
+        //findStateCity(coor.lat, coor.lng);
+        //cityState = findStateCity(coor.lat, coor.lng);
+        // var newData = $.get('/api/query?lat=' + coor.lat + '&lng=' + coor.lng);
+        //var newData = $.get('/api/query?key=location' + '&value=[' + coor.lat + ',' + coor.lng + ']')
+        $.get('/api/query?key=location' + '&value=[' + coor.lat + ',' + coor.lng + ']')
+        // //Add error handling?
+
     });
 
     // Sending our jobs layer to the createMap function
