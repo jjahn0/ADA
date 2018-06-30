@@ -7,8 +7,8 @@ bubbleData.done( function(data){
     var layout = {
         title: 'Bubble Chart',
         showlegend: false,
-        xaxis: { title: "Median Salary range", range: [0, 200000]},
-        yaxis: { title: "Rating Score", range: [0, 5]},
+        xaxis: { title: "Median Salary range"},
+        yaxis: { title: "Rating Score"}
         };
     Plotly.newPlot('bubble', data, layout);
 })

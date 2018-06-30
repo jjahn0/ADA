@@ -11,7 +11,7 @@
 var dataTable = $.get('/table');
 
 dataTable.done( function(data){
-    results = data.slice(0,9);
+    results = data.slice(0,49);
     const keys = Object.keys(results[0]);
     // console.log(keys);
     var table = d3.select("#datatable")
@@ -22,6 +22,7 @@ dataTable.done( function(data){
 
     thead.append('tr')
         .selectAll('th')
+        .attr("class","mdb-color lighten-4")
         .data(keys).enter()
         .append('th')
             .text(function (key) {return key;});

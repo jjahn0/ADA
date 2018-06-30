@@ -1,5 +1,7 @@
-from flask import Flask, render_template, jsonify, redirect
+from flask import Flask, render_template, jsonify, redirect, request
 from flask_pymongo import PyMongo
+import pandas as pd
+import json
 import scrape_glassdoor
 
 app = Flask(__name__)
@@ -12,11 +14,32 @@ def index():
 @app.route("/api/scrape")
 def scraper():
     glass = mongo.db.glass
-    glass_data = scrape_glassdoor.scrape()
-    for job in glass_data:
-        glass.insert(job)
+    # glass_data = scrape_glassdoor.scrape()
+    with open('Resources/glass.json', 'r') as infile:
+        glass_data = json.load(infile)
+        for job in glass_data:
+            glass.insert(job)
     
     return redirect("http://localhost:5000/", code=302)
+
+@app.route("/api/query")
+def query():
+    key = request.args.get('key')
+    value = request.args.get('value')
+    if key != None and value != None:
+        glassQ = mongo.db.glass.find({key:value})
+        result = pd.DataFrame(glassQ).to_dict(orient="records")
+        return jsonify(result)
+
+@app.route("/process")
+def process():
+    return render_template("process.html")
+
+
+
+@app.route("/bellchart")
+def bellchart():
+    return render_template("bell.html")
 
 @app.route("/bell")
 def bells():
@@ -38,8 +61,14 @@ def bells():
         if entry["y"][0] != "":
             bellData.append(entry)
         y=[]
-    return jsonify(bellData)
+    df = pd.DataFrame.from_dict(bellData)
+    df = df.sort_values('y', ascending=True)
+    Data = df.to_dict(orient='records')
+    return jsonify(Data)
 
+@app.route("/bubbleplot")
+def bubbleplot():
+    return render_template("bubble.html")
 
 @app.route("/bubble")
 def bubbles():
@@ -67,11 +96,15 @@ def bubbles():
                 }
             }
         }
-        data.append(entry)
+        if entry["x"][0] != "" or entry["y"][0] != "":
+            data.append(entry)
         entry={}
         
     return jsonify(data)
 
+@app.route("/geomap")
+def geomap():
+    return render_template("map.html")
 
 @app.route('/map')
 def map():
@@ -79,15 +112,18 @@ def map():
     data = []
     entry = {}
     for job in glass:
-        entry = {
-            'title': job['title'],
-            'company': job['company'],
-            'city' : job['city'],
-            'state': job['state'],
-            'location': job['location'],
-        }
-        data.append(entry)
-        entry={}
+        if not job['location']:
+            pass
+        else:
+            entry = {
+                'title': job['title'],
+                'company': job['company'],
+                'city' : job['city'],
+                'state': job['state'],
+                'location': job['location'],
+            }
+            data.append(entry)
+            entry={}
     print("Data created")
 
     geojson = {
@@ -105,6 +141,10 @@ def map():
 
     print("Returning GeoJson style data")
     return jsonify(geojson)
+
+@app.route("/datatable")
+def datatable():
+    return render_template("datatable.html")
 
 @app.route('/table')
 def table():

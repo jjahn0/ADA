@@ -9,7 +9,33 @@ body,
 html {
   height: 100%;
 }
-#map {
-    height:100vh; 
+.map-small {
+    height:50vh;
 }
 
+.map-large {
+  height:80vh;
+}
+
+.bellchart-small {
+  height:50vh; 
+}
+
+.bellchart-large {
+  height:75vh; 
+}
+
+.bubbleplot-small{
+  height:50vh;
+}
+
+.bubbleplot-large{
+  height: 75vh;
+}
+
+.table-wrapper-2 {
+  display: block;
+  max-height: 50vh;
+  overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}

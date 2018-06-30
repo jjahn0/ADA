@@ -32,28 +32,43 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar-1">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="data.html">data</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Menu<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/geomap">job geolocations</a></li>
+                                <li><a href="/bellchart">company v salary</a></li>
+                                <li><a href="/bubbleplot">rating v salary</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="/datatable">Data</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">code</a></li>
+                        <li><a href="/process">process</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
         <div class="row">
             <div class="col-md-6" style="padding:20px">
-                <h3>MAP</h3>
-                <div id="map"></div>
+                <div id="map" class="map-small"></div>
             </div>
             <div class="col-md-6" style="padding:20px">
-                <div id="datatable"></div>
+                <div class="card">
+                    <div class="card-body">
+                        <div id="datatable" class="table-wrapper-2">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6" style="padding:20px">
-                <h3>bell</h3>
-                <div id="bell"></div>
+                <div id="bell" class="bellchart-small"></div>
             </div>
             <div class="col-md-6" style="padding:20px">
-                <h3>Bubbles</h3>
-                <div id="bubble"></div>
+                <div id="bubble" class="bubbleplot-small"></div>
             </div>
         </div>
     </div>
