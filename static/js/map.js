@@ -2,6 +2,10 @@
 //var queryUrl = "assets/dataJobs.json";
 
 //JQuery to get data from endpoint
+var query = $.get('/api/query');
+if (query) {
+    console.log("There is a query")
+}
 var jobsData = $.get('/map');
 
 //JQuery to push data (state,city)
