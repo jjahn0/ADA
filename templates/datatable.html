@@ -9,12 +9,6 @@
   <link rel="stylesheet" href="/static/css/style.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://bootswatch.com/3/cerulean/bootstrap.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.0.3/dist/leaflet.markercluster.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.css">
-  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.Default.css">
 </head>
 
 <body>
@@ -51,24 +45,13 @@
             </div>
         </nav>
         <div class="row">
-            <div class="col-md-6" style="padding:20px">
-                <div id="map"></div>
-            </div>
-            <div class="col-md-6" style="padding:20px">
+            <div class="col-md-12" style="padding:50px">
                 <div class="card">
                     <div class="card-body">
-                        <div id="datatable" class="table-wrapper-2">
+                        <div id="datatable" class="table-wrapper-1">
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6" style="padding:20px">
-                <div id="bell"></div>
-            </div>
-            <div class="col-md-6" style="padding:20px">
-                <div id="bubble"></div>
             </div>
         </div>
     </div>
@@ -77,9 +60,6 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="http://www.numericjs.com/lib/numeric-1.2.6.js"></script>
-<script src="{{ url_for('static', filename='js/map.js') }}"></script>
 <script src="{{ url_for('static', filename='js/table.js') }}"></script>
-<script src="{{ url_for('static', filename='js/bubble.js') }}"></script>
-<script src="{{ url_for('static', filename='js/bell.js') }}"></script>
 </body>
 </html>

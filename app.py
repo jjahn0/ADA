@@ -69,36 +69,47 @@ def bells():
 @app.route("/bubbleplot")
 def bubbleplot():
     return render_template("bubble.html")
-
+ 
+# [39.56, -114.07] to  [42.52, -89.09]
 @app.route("/bubble")
 def bubbles():
-    companies = mongo.db.glass.distinct('company')
+    glass = mongo.db.glass.find({})
+    df = pd.DataFrame(list(glass))
+    df1 = df.loc[(df.salaryMED != '') & (df.location)]
+    lng = []
     data = []
     entry = {}
-    for company in companies:
-        job = mongo.db.glass.find_one({"company":company})
-        median = job['salaryMED']
-        rating = job['rating']
-        rgba = 'rgba(%d,0,0)' % 255
+    bins = ['westcoast', 'midwest', 'eastcoast']
+    colors = {
+        'westcoast' : 'blue',
+        'midwest' : 'orange',
+        'eastcoast' : 'red'
+    }
+    for index, rows in df1.iterrows():
+        lng.append(rows['location'][1])
+
+    df1['long'] = lng
+    df1['bin'] = pd.cut(df1['long'], [-200, -114, -89, 0], labels=bins)
+
+    for item in bins:
+        result = df1.loc[df1['bin']==item].drop_duplicates(['company'])
         entry = {
-            'x': [median],
-            'y': [rating],
-            'mode': 'markers',
-            'type': 'scatter',
-            'text': [job['company']],
-            'markers':{
-                'color': [rgba],
-                'size': [rating*8],
-                'symbol': ['circle'],
-                'line': {
-                    'color': 'rgba(0,0,0)',
+            'x' : list(result['salaryMED'].values),
+            'y' : list(result['rating'].values),
+            'mode' : 'markers',
+            'name' : item,
+            'type' : 'scatter',
+            'text' : list(result['company'].values),
+            'markers' : {
+                'color' : colors[item],
+                'size' : 20,
+                'line' : {
+                    'color' : 'rgba(0,0,0)',
                     'width' : 1
                 }
             }
         }
-        if entry["x"][0] != "" or entry["y"][0] != "":
-            data.append(entry)
-        entry={}
+        data.append(entry)
         
     return jsonify(data)
 
@@ -146,9 +157,14 @@ def map():
 def datatable():
     return render_template("datatable.html")
 
-@app.route('/table')
+@app.route('/table', methods=['GET', 'POST'])
 def table():
-    glass = mongo.db.glass.find()
+    if request == 'POST':
+        key = request.args.get('key')        
+        value = request.args.get('value')
+        glass = mongo.db.glass.find({key:value})
+    else:
+        glass = mongo.db.glass.find()
     data = []
     entry = {}
     for job in glass:

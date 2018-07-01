@@ -10,15 +10,15 @@ html {
   height: 100%;
 }
 .map-small {
-    height:50vh;
+  height:60vh;
 }
 
 .map-large {
-  height:80vh;
+  height:90vh;
 }
 
 .bellchart-small {
-  height:50vh; 
+  height:60vh; 
 }
 
 .bellchart-large {
@@ -26,7 +26,7 @@ html {
 }
 
 .bubbleplot-small{
-  height:50vh;
+  height:60vh;
 }
 
 .bubbleplot-large{
@@ -35,7 +35,16 @@ html {
 
 .table-wrapper-2 {
   display: block;
-  max-height: 50vh;
+  font-size: 9px;
+  max-height: 60vh;
+  overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.table-wrapper-1 {
+  display: block;
+  font-size: 14px;
+  max-height: 75vh;
   overflow-y: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
