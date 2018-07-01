@@ -159,9 +159,9 @@ def datatable():
 
 @app.route('/table', methods=['GET', 'POST'])
 def table():
-    if request == 'POST':
-        key = request.args.get('key')        
-        value = request.args.get('value')
+    key = request.args.get('key')        
+    value = request.args.get('value')
+    if key != None and value != None:
         glass = mongo.db.glass.find({key:value})
     else:
         glass = mongo.db.glass.find()
