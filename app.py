@@ -22,18 +22,25 @@ def scraper():
     
     return redirect("http://localhost:5000/", code=302)
 
-@app.route("/api/query")
-def query():
-    key = request.args.get('key')
-    value = request.args.get('value')
-    if key != None and value != None:
-        glassQ = mongo.db.glass.find({key:value})
-        result = pd.DataFrame(glassQ).to_dict(orient="records")
-        return jsonify(result)
+# @app.route("/api/query", methods=["GET", "POST"])
+# def query():
+#     key = request.args.get('key')
+#     value = request.args.get('value')
+#     if key != None and value != None:
+#         glass = mongo.db.glass.find({key:value})
+#         df = pd.DataFrame(list(glass))
+#         result = df.to_json(orient="records")
+#         return result
+#     else:
+#         return jsonify({'error': 'query-fail'})
 
 @app.route("/process")
 def process():
     return render_template("process.html")
+
+@app.route("/summary")
+def summary():
+    return render_template("summary.html")
 
 
 
@@ -41,30 +48,40 @@ def process():
 def bellchart():
     return render_template("bell.html")
 
-@app.route("/bell")
+@app.route("/bell", methods=["GET", "POST"])
 def bells():
-    bellData = []
+    key = request.args.get('key')        
+    value = request.args.get('value')
+    if key != None and value != None:
+        glass = mongo.db.glass.find({key:value})
+    else:
+        glass = mongo.db.glass.find()
+    df = pd.DataFrame(list(glass))
+    df1 = df.loc[(df.salaryMED != '') & (df.location)]
+    lng = []
+    data = []
     entry = {}
-    y = []
-    companies = mongo.db.glass.distinct('company')
-    for company in companies:
-        qResult = mongo.db.glass.find_one({"company":company})
-        y.append(qResult['salaryMIN'])
-        y.append(qResult['salaryMED'])
-        y.append(qResult['salaryMAX'])
-        name = qResult['company']
+    bins = ['westcoast', 'midwest', 'eastcoast']
+    colors = {
+        'westcoast' : 'blue',
+        'midwest' : 'orange',
+        'eastcoast' : 'green'
+    }
+    for index, rows in df1.iterrows():
+        lng.append(rows['location'][1])
+    df1['long'] = lng
+    df1['bin'] = pd.cut(df1['long'], [-200, -114, -89, 0], labels=bins)
+    df1 = df1.sort_values('salaryMED', ascending=True)
+    result = df1.drop_duplicates(['company'])
+    for job in result.itertuples(index=True, name='Pandas'):
         entry = {
-            "y": y,
-            "type":"box",
-            "name":name
+            "y": [getattr(job,'salaryMIN'), getattr(job,'salaryMED'), getattr(job,'salaryMAX')],
+            "name":  getattr(job,'company'),
+            "type": "box",
+            "marker": {"color":colors[getattr(job,'bin')]}
         }
-        if entry["y"][0] != "":
-            bellData.append(entry)
-        y=[]
-    df = pd.DataFrame.from_dict(bellData)
-    df = df.sort_values('y', ascending=True)
-    Data = df.to_dict(orient='records')
-    return jsonify(Data)
+        data.append(entry)
+    return jsonify(data)
 
 @app.route("/bubbleplot")
 def bubbleplot():
@@ -83,14 +100,14 @@ def bubbles():
     colors = {
         'westcoast' : 'blue',
         'midwest' : 'orange',
-        'eastcoast' : 'red'
+        'eastcoast' : 'green'
     }
     for index, rows in df1.iterrows():
         lng.append(rows['location'][1])
 
     df1['long'] = lng
     df1['bin'] = pd.cut(df1['long'], [-200, -114, -89, 0], labels=bins)
-
+    
     for item in bins:
         result = df1.loc[df1['bin']==item].drop_duplicates(['company'])
         entry = {

@@ -1,10 +1,8 @@
 
-$("test-button").click(function(){
-    $.post("/table?key=city&value=San%20Francisco",
-    function(data, status){
-        console.log(data);
-    })
-});
+// $("#test-button").click(function(){
+//     $.post("/table?key=city&value=San%20Francisco",
+//     renderBell(data)
+
 
 function renderTable(url){
     var dataTable = $.get(url);
@@ -21,7 +19,7 @@ function renderTable(url){
         thead.append('tr')
             .selectAll('th')
             .attr("class","mdb-color lighten-4")
-            .data(keys).enter()
+            .data(keys).enter() 
             .append('th')
                 .text(function (key) {return key;});
 
@@ -46,4 +44,4 @@ function renderTable(url){
     })
 }
 
-renderTable('/table')
+// renderTable('/table?key=company&value=LendUp')
