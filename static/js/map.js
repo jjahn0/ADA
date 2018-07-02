@@ -80,8 +80,10 @@ function createFeatures(jobsData) {
         //cityState = findStateCity(coor.lat, coor.lng);
         // var newData = $.get('/api/query?lat=' + coor.lat + '&lng=' + coor.lng);
         //var newData = $.get('/api/query?key=location' + '&value=[' + coor.lat + ',' + coor.lng + ']')
-        $.get('/api/query?key=location' + '&value=[' + coor.lat + ',' + coor.lng + ']')
+        //$.get('/api/query?key=location' + '&value=[' + coor.lat + ',' + coor.lng + ']')
         // //Add error handling?
+        var location = [coor.lat, coor.lng];
+        renderAll("location",location);
 
     });
 
