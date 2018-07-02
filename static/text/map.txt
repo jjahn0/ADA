@@ -1,7 +1,9 @@
 Map rendering approach: 
-I pulled data stored in mongodb using pymongo, re-formatted it into geojson and served that data to javascript using Flask.
-The javascript uses Jquery to request the scrapped data with information about each job (company, city, state, geocoordinates) and using leaflet to plot each job posting over a map of the United States.
-Two different maps are sourced from mapbox (an outdoor/streep map and a light map). The maps are centered around coordinates that are approx. in the middle of the country and the correct zoom setting is applied to be able to see the whole country in the space provided by bootstrap. Map options are used to limit both the min and max zoom levels.
-A leaflet plugin called markercluster is used to group job posting that located in the same area, so that group markers are plotted in the map with a number and size indicating the number of data analysis jobs available in each area of the country. 
-As the user zooms in, the information is analyzed by the plugin and the grouped markers are modified if needed to better represent the information in the map.
-Finally, each time a user clicks on one marker or double clicks on an area, the javascript captures the coordinates in the map and passes that information to the main python file using a predefined endpoint (/api/query). The python app analyzes the received coordinates and updates other graphs in the hmtl with more localized job postings.
+1. pulled data stored in mongodb using pymongo, re-formatted it into geojson and served that data to javascript using Flask.
+2. The javascript uses Jquery to request the scrapped data with information about each job (company, city, state, geocoordinates) and using leaflet to plot each job posting over a map of the United States.
+3. Two different maps are sourced from mapbox (an outdoor/streep map and a light map). The maps are centered around coordinates that are approx. in the middle of the country and the correct zoom setting is applied to be able to see the whole country in the space provided by bootstrap. 
+4. Map options are used to limit both the min and max zoom levels.
+5. A leaflet plugin called markercluster is used to group job posting that located in the same area, so that group markers are plotted in the map with a number and size indicating the number of data analysis jobs available in each area of the country. 
+6. The plugin default values to determine the cluster colors and ranges are modified and the plugin scripts are saved locally instead of referencing the CDN.
+6. As the user zooms in, the information is analyzed by the plugin and the grouped markers are modified if needed to better represent the information in the map.
+7. Finally, each time a user clicks on one marker or double clicks on an area, the javascript captures the coordinates in the map and passes that information to the main python file using a predefined endpoint (/api/query). The python app analyzes the received coordinates and updates other graphs in the hmtl with more localized job postings.
