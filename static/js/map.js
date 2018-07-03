@@ -1,11 +1,4 @@
-// Store our API endpoint inside queryUrl
-//var queryUrl = "assets/dataJobs.json";
 
-//JQuery to get data from endpoint
-var query = $.get('/api/query');
-if (query) {
-    console.log("There is a query")
-}
 var jobsData = $.get('/map');
 
 //JQuery to push data (state,city)
@@ -130,9 +123,4 @@ function createMap(jobs) {
     L.control.layers(baseMaps, overlayMaps, {
         collapsed: false
     }).addTo(myMap);
-
-    // var myMap = document.getElementById('map');
-    // myMap.on('plotly_click', function (d) {
-    //     window.alert("Click on map registered");
-    });
 }
