@@ -1,0 +1,12 @@
+Scatter Plot Text
+1.	The scatter plot chart ranks a cloud of dots from low to high the Median Salary and Company Rating for each jobs currently posted on Glassdoor. Most of data points were found to be between 40k and 80k salary range.
+
+2.	Visualization Layout: 
+2.1.	The Scatter plot chart offers the flexibility to display visually many variables in once. 
+2.2.	X-axis: [Median Salary], Y-axis: [Company Rating], Marker size: [n/a], Color: [Westcoast/Midwest/EastCoast], Text highlight: [Company Name]
+
+3.	Visualization Layout: 
+3.1.	The central file (app.py) routes the different URL of the chart to the Flask server using a variable name “bubble” as a keyword argument routing the query back to the server.
+4.2.	The data is pulled from a central data frame stored in Mongo DB as an Object Relational Mapper interface.
+4.3.	For each rows of data, a for loop is executed appending the data variable to a dataframe.
+4.4.	Finally the data are displayed as a Scatter plot to display the visualization.

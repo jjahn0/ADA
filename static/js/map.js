@@ -131,4 +131,8 @@ function createMap(jobs) {
         collapsed: false
     }).addTo(myMap);
 
+    // var myMap = document.getElementById('map');
+    // myMap.on('plotly_click', function (d) {
+    //     window.alert("Click on map registered");
+    });
 }

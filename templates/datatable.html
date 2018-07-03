@@ -22,7 +22,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                        <a class="navbar-brand" href="/">ADA</a>
+                        <a class="navbar-brand" href="/">Glassdoor: A scrapping application querying for "Data Analyst" jobs</a>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar-1">
                     <ul class="nav navbar-nav navbar-right">
@@ -38,8 +38,8 @@
                                 <li><a href="/datatable">Data</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">code</a></li>
                         <li><a href="/process">process</a></li>
+                        <li><a href="/summary">summary</a></li>
                     </ul>
                 </div>
             </div>
@@ -61,5 +61,8 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="http://www.numericjs.com/lib/numeric-1.2.6.js"></script>
 <script src="{{ url_for('static', filename='js/table.js') }}"></script>
+<script>
+    renderTable('/table');
+</script>
 </body>
 </html>

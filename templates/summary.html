@@ -9,14 +9,6 @@
   <link rel="stylesheet" href="/static/css/style.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://bootswatch.com/3/cerulean/bootstrap.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
-  <!-- <script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.0.3/dist/leaflet.markercluster.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.css">
-  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.Default.css"> -->
-  <script type="text/javascript" src="/static/js/leaflet.markercluster.js"></script>
-  <link rel="stylesheet" type="text/css" href="/static/css/MarkerCluster.css">
-  <link rel="stylesheet" type="text/css" href="/static/css/MarkerCluster.Default.css">
 </head>
 
 <body>
@@ -39,9 +31,9 @@
                                 Menu<span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="/geomap">job geolocations</a></li>
-                                <li><a href="/bellchart">company v salary</a></li>
-                                <li><a href="/bubbleplot">rating v salary</a></li>
+                                <li><a href="/map">job geolocations</a></li>
+                                <li><a href="/bell">company v salary</a></li>
+                                <li><a href="/bubble">rating v salary</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="/datatable">Data</a></li>
                             </ul>
@@ -53,11 +45,10 @@
             </div>
         </nav>
         <div class="row">
-            <div class="col-md-12" style="padding:50px">
-                <div id="map"></div>
-            </div>
-            <div id="text">
-                    <object data="/static/text/map.txt" type="text/html" width="90%" style="padding:10px" align="center"></object>
+            <div class="col-md-12" style="padding:20px">
+                <div id="text"  class="process-large">
+                    <img src="/static/images/summary.png" alt="application process" height="100%" width="100%">
+                </div>
             </div>
         </div>
     </div>
@@ -65,7 +56,5 @@
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="http://www.numericjs.com/lib/numeric-1.2.6.js"></script>
-<script src="{{ url_for('static', filename='js/map.js') }}"></script>
 </body>
 </html>

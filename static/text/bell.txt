@@ -1,0 +1,10 @@
+Salary range box chart coding-approach:
+1. Pulled data and stored in mongoDB using PyMongo by utilizing Flask where the stored data is constructed as /api/scrape at localhost. 
+2. Re-ordered the json data from mongoDB by companies and selected the data, the lowest, highest, and median salary in the salary ranges. Bundle up with the entry elements which will shape the box plot format and pull all data into DataFrame to clean and sort the data. 
+3. Load data set up in the central file (app.py) in the bell route('/bell') using jQuery get request. Define the variable as bellData.
+4. Create function as data to set up the plot from the bellData
+5. Define the color for each box chart looping through the array of data 
+6. Define the layout of the chart:title, x-axis, y-axis, and color creating variable 	layout
+7. Render the plot with plotly including data and layout to the div tag with id "bell".
+
+

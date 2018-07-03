@@ -7,9 +7,23 @@ import scrape_glassdoor
 app = Flask(__name__)
 mongo = PyMongo(app)
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("index.html")
+    key = request.args.get('key')
+    value = request.args.get('value')
+    if key == 'salaryMED':
+        value = int(value)
+    elif key == 'location':
+        value = [float(value[0]), float(value[1])]
+    value = request.args.get('value')
+    query = {
+        "key" : key,
+        "value" : value
+    }
+    glass = mongo.db.glass.find( { key:value } )
+    if glass == []:
+        query = None
+    return render_template("index.html", query=query)
 
 @app.route("/api/scrape")
 def scraper():
@@ -52,9 +66,15 @@ def bellchart():
 def bells():
     key = request.args.get('key')        
     value = request.args.get('value')
+    if key == 'salaryMED':
+        value = int(value)
+    elif key == 'location':
+        value = [float(value[0]), float(value[1])]
     if key != None and value != None:
-        glass = mongo.db.glass.find({key:value})
+        glass = mongo.db.glass.find( { key:value } )
     else:
+        glass = mongo.db.glass.find()
+    if glass == None:
         glass = mongo.db.glass.find()
     df = pd.DataFrame(list(glass))
     df1 = df.loc[(df.salaryMED != '') & (df.location)]
@@ -63,8 +83,8 @@ def bells():
     entry = {}
     bins = ['westcoast', 'midwest', 'eastcoast']
     colors = {
-        'westcoast' : 'blue',
-        'midwest' : 'orange',
+        'westcoast' : 'DodgerBlue',
+        'midwest' : 'DarkOrange',
         'eastcoast' : 'green'
     }
     for index, rows in df1.iterrows():
@@ -76,7 +96,7 @@ def bells():
     for job in result.itertuples(index=True, name='Pandas'):
         entry = {
             "y": [getattr(job,'salaryMIN'), getattr(job,'salaryMED'), getattr(job,'salaryMAX')],
-            "name":  getattr(job,'company'),
+            "name": getattr(job,'company'),
             "type": "box",
             "marker": {"color":colors[getattr(job,'bin')]}
         }
@@ -88,9 +108,20 @@ def bubbleplot():
     return render_template("bubble.html")
  
 # [39.56, -114.07] to  [42.52, -89.09]
-@app.route("/bubble")
+@app.route("/bubble", methods=["GET", "POST"])
 def bubbles():
-    glass = mongo.db.glass.find({})
+    key = request.args.get('key')        
+    value = request.args.get('value')
+    if key == 'salaryMED':
+        value = int(value)
+    elif key == 'location':
+        value = [float(value[0]), float(value[1])]
+    if key != None and value != None:
+        glass = mongo.db.glass.find({key:value})
+    else:
+        glass = mongo.db.glass.find()
+    if glass == None:
+        glass = mongo.db.glass.find()
     df = pd.DataFrame(list(glass))
     df1 = df.loc[(df.salaryMED != '') & (df.location)]
     lng = []
@@ -178,9 +209,15 @@ def datatable():
 def table():
     key = request.args.get('key')        
     value = request.args.get('value')
+    if key == 'salaryMED':
+        value = int(value)
+    elif key == 'location':
+        value = [float(value[0]), float(value[1])]
     if key != None and value != None:
         glass = mongo.db.glass.find({key:value})
     else:
+        glass = mongo.db.glass.find()
+    if glass == None:
         glass = mongo.db.glass.find()
     data = []
     entry = {}

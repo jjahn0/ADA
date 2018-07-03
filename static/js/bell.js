@@ -34,6 +34,11 @@ function renderBell(url){
         };
 
         Plotly.newPlot('bell', data, layout);
+        var myPlot = document.getElementById('bell')
+        myPlot.on('plotly_click', function (d) {
+            window.location.replace("/?key=company&value="+ d.points[0].data.name);
+            // window.location.replace("/?key=salaryMED&value="+ d.points[0].data.y[1]);
+        });
     });
 }
 

@@ -1,9 +1,4 @@
 
-// $("#test-button").click(function(){
-//     $.post("/table?key=city&value=San%20Francisco",
-//     renderBell(data)
-
-
 function renderTable(url){
     var dataTable = $.get(url);
     dataTable.done( function(data){
@@ -39,7 +34,9 @@ function renderTable(url){
                 // .attr("style", "font-size:9px")
                 // .append('a')
                 // .attr('href', '#')
-                .text(function(d){return d.value});
+                .html(function(d,i){
+                    return "<a href='/?key="+keys[i]+"&value="+d.value+"'>"+d.value+"</a>";
+                });
 
     })
 }

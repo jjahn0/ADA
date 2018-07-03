@@ -31,7 +31,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                        <a class="navbar-brand" href="/">ADA</a>
+                        <a class="navbar-brand" href="/">Glassdoor: A scrapping application querying for "Data Analyst" jobs</a>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar-1">
                     <ul class="nav navbar-nav navbar-right">
@@ -48,7 +48,7 @@
                             </ul>
                         </li>
                         <li><a href="/process">process</a></li>
-                        <li><a href="#">summary</a></li>
+                        <li><a href="/summary">summary</a></li>
 
                     </ul>
                 </div>
@@ -62,7 +62,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div id="datatable" class="table-wrapper-2">
-                            <form action="" method="POST" ><button id="test-button" class="btn btn-danger" type="submit" name="test" value="{{  item2  }}"><span class="glyphicon glyphicon-trash"></span> Test</button> </form>
+                            <a href="/">RESET</a>
                         </div>
                     </div>
                 </div>
@@ -87,5 +87,11 @@
 <script src="{{ url_for('static', filename='js/bubble.js') }}"></script>
 <script src="{{ url_for('static', filename='js/bell.js') }}"></script>
 <script src="{{ url_for('static', filename='js/render.js') }}"></script>
+<script type="text/javascript">
+    var query = {{ query | tojson}};
+    var qkey = query["key"];
+    var qvalue = query["value"];
+    renderAll(qkey, qvalue);
+</script>
 </body>
 </html>

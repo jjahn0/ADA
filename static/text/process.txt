@@ -1,0 +1,17 @@
+
+Coding Approach: 
+1.	We browsed the Glassdoor database host a wide range of information within the United States 
+2.	We scraped the page using Beautiful Soup framing the information into a Json file.
+3.	We stored the Json file into a central database using Mongo DB as an Object Relational Mapper interface.
+4.	We setup a microframework python based language using Flask server to host the data as a central query platform.
+5.	We executed a central file (app.py) routing the different URL of the different charts to the Flask server using a variable name as a keyword argument routing the query back to the server.
+
+Data Munging Technique:
+1.	Using a for-loop each row of data, the script retrieves the variables to plot on the various visual elements. 
+2.      Given the fact that Glassdoor repost job descriptions over time, duplicates were found. Isolating the unique job descriptions limited the list of jobs from 51,536 to 350.
+3.	The data are appended into a list passing the summary of data to the jsonify function, which returns a JSON response.
+
+Final Visualization:
+1.	A final interactive and dynamic dashboard was put together integrating all the responsive charts and the table to the query located at the header level. 
+2.      Different colors coding have been implemented to simplify the reading process at different scales of the analysis. 
+3.      In order to maximize the screen resolution, a drop-down menu located at the top allows the user to dynamically expand the chart in a different window. 
