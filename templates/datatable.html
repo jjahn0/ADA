@@ -62,7 +62,10 @@
 <script src="http://www.numericjs.com/lib/numeric-1.2.6.js"></script>
 <script src="{{ url_for('static', filename='js/table.js') }}"></script>
 <script>
-    renderTable('/table');
+    var url = $.get('/api/query');
+    url.done(function(data){
+        renderTable(data);
+    });
 </script>
 </body>
 </html>

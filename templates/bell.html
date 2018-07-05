@@ -39,8 +39,8 @@
                                 <li><a href="/datatable">Data</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">code</a></li>
                         <li><a href="/process">process</a></li>
+                        <li><a href="/summary">summary</a></li>
                     </ul>
                 </div>
             </div>
@@ -59,8 +59,14 @@
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="http://www.numericjs.com/lib/numeric-1.2.6.js"></script>
     <script src="{{ url_for('static', filename='js/bell.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/render.js') }}"></script>
     <script>
-            renderBell('/bell');
+        var url = $.get('/api/query');
+        url.done(function(data){
+            var uniqueData = unique(data);
+            var bellDB = bellData(uniqueData);
+            renderBell(bellDB);
+        });
     </script>
 </body>
 </html>

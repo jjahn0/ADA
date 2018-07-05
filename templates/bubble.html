@@ -62,8 +62,14 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="http://www.numericjs.com/lib/numeric-1.2.6.js"></script>
 <script src="{{ url_for('static', filename='js/bubble.js') }}"></script>
+<script src="{{ url_for('static', filename='js/render.js') }}"></script>
 <script>
-    renderBubble('/bubble');
+    var url = $.get('/api/query');
+    url.done(function(data){
+        var uniqueData = unique(data);
+        var bubbleDB = bubbleData(uniqueData);
+        renderBubble(bubbleDB);
+    });
 </script>
 </body>
 </html>
