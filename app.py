@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify, redirect, request
 from flask_pymongo import PyMongo
+from time import gmtime, strftime
 import pandas as pd
 import json
 import sys
@@ -28,16 +29,33 @@ def index():
         query = None
     return render_template("index.html", query=query)
 
-@app.route("/api/scrape")
-def scraper():
+@app.route("/api/mongodb", methods=["GET", "POST"])
+def mongodb():
+    date = request.args.get('date')
+    if (date != None):
+        path = 'Resources/glass{}.json'.format(date)
+    else:
+        path = 'Resources/glass2018-07-03.json'
     glass = mongo.db.glass
-    # glass_data = scrape_glassdoor.scrape()
-    with open('Resources/glass2018-07-03.json', 'r') as infile:
+    with open(path, 'r') as infile:
         glass_data = json.load(infile)
         for job in glass_data:
             glass.insert(job)
-    
-    return redirect("http://localhost:5000/", code=302)
+
+    return redirect("/", code=302)
+
+@app.route("/api/scrape")
+def scraper():
+    timestamp = strftime("%Y-%m-%d", gmtime())
+    path = "Resources/glass{}.json".format(timestamp)
+    glass_data = scrape_glassdoor.scrape()
+     
+    with open(path, 'w') as outfile:
+        json.dump(glass_data, outfile)
+
+    queryURL = "/api/mongodb?date={}".format(timestamp)
+
+    return redirect(queryURL, code=302)
 
 @app.route("/api/query", methods=["GET", "POST"])
 def query():

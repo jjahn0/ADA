@@ -9,11 +9,15 @@ function unique(input){
         if (!(company in lookup)) {
             lookup[company] = 1;
             result.push({
+                title: item.title,
                 company: item.company,
+                city: item.city,
+                state: item.state,
                 salaryMIN: item.salaryMIN,
                 salaryMED: item.salaryMED,
                 salaryMAX: item.salaryMAX,
                 rating: item.rating,
+                duration: item.duration,
                 lng: item.lng
             });
         }
@@ -129,12 +133,12 @@ function renderAll(key, value){
     else {var queryString = '';}
     var JSONdata = $.get('/api/query' + queryString);
     JSONdata.done(function(data){
-        renderTable(data);
         var uniqueData = unique(data);
         var bellDB = bellData(uniqueData);
         var bubbleDB = bubbleData(uniqueData);
         var mapDB = mapData(data);
-        renderMap(mapDB)
+        renderTable(uniqueData);
+        renderMap(mapDB);
         renderBell(bellDB);
         renderBubble(bubbleDB);
     });

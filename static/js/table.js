@@ -1,8 +1,8 @@
 
 function renderTable(data){
-    results = data.slice(0,49);
-    const keys = Object.keys(results[0]);
-    // console.log(keys);
+    // var pages = ["<<",1,2,3,4,5,">>"];
+    const keys = Object.keys(data[0]);
+ 
     var table = d3.select("#datatable")
         .append("table")
         .attr("class", "table table-striped table-responsive");
@@ -17,7 +17,7 @@ function renderTable(data){
             .text(function (key) {return key;});
 
     var rows = tbody.selectAll('tr')
-        .data(results)
+        .data(data)
         .enter()
         .append('tr');
     
@@ -29,12 +29,10 @@ function renderTable(data){
         })
         .enter()
         .append('td')
-            // .attr("style", "font-size:9px")
-            // .append('a')
-            // .attr('href', '#')
             .html(function(d,i){
                 return "<a href='/?key="+keys[i]+"&value="+d.value+"'>"+d.value+"</a>";
         });
 }
 
-// renderTable('/table?key=company&value=LendUp')
+
+
