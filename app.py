@@ -1,15 +1,31 @@
 from flask import Flask, render_template, jsonify, redirect, request
 from flask_pymongo import PyMongo
+from pymongo import MongoClient
 from time import gmtime, strftime
 import pandas as pd
 import json
 import sys
+import os
+from urllib.parse import urlsplit
+
 from bson import BSON
 from bson import json_util
+from dotenv import load_dotenv
 import scrape_glassdoor
 
 app = Flask(__name__)
 mongo = PyMongo(app)
+
+MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/ADA')
+
+def _get_db_connection(self):
+    parsed = urlsplit(MONGODB_URI)
+    db_name = parsed.path[1:]
+    db = MongoClient(MONGODB_URI)[db_name]
+    if '@' in MONGODB_URI:
+        user, password = parsed.netloc.split('@')[0].split(':')
+        db.authenticate(user, password)
+    return db
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -38,8 +54,8 @@ def mongodb():
         path = 'Resources/glass2018-07-03.json'
     glass = mongo.db.glass
     with open(path, 'r') as infile:
-        glass_data = json.load(infile)
-        for job in glass_data:
+        glassdb = json.load(infile)
+        for job in glassdb:
             glass.insert(job)
 
     return redirect("/", code=302)
